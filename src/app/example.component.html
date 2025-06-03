@@ -1,0 +1,51 @@
+<h2>Formulario: creación de producto</h2>
+
+<form [formGroup]="formulario" (ngSubmit)="submitForm()" novalidate>
+
+  <!-- Fila: Título y Precio -->
+  <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+    <div style="flex: 1;">
+      <label for="title">Nombre del producto:</label>
+      <input id="title" type="text" formControlName="title" />
+      <div *ngIf="formulario.get('title')?.invalid && formulario.get('title')?.touched" style="color: red;">
+        Este campo es obligatorio.
+      </div>
+    </div>
+
+    <div style="flex: 1;">
+      <label for="price">Precio</label>
+      <input id="price" type="number" formControlName="price" step="0.01" />
+      <div *ngIf="formulario.get('price')?.invalid && formulario.get('price')?.touched" style="color: red;">
+        Ingrese un número válido y mayor que 0.
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-bottom: 1rem;">
+    <label for="description">Descripción:</label>
+    <textarea id="description" formControlName="description" rows="3"></textarea>
+    <div *ngIf="formulario.get('description')?.invalid && formulario.get('description')?.touched" style="color: red;">
+      Este campo es obligatorio.
+    </div>
+  </div>
+
+
+  <div style="margin-bottom: 1.5rem;">
+    <label for="categoryId">Categoría:</label>
+    <select id="categoryId" formControlName="categoryId">
+      <option value="">Seleccione una categoría</option>
+      <option *ngFor="let category of categories" [value]="category.idCategory">
+        {{ category.text }}
+      </option>
+    </select>
+    <div *ngIf="formulario.get('categoryId')?.invalid && formulario.get('categoryId')?.touched" style="color: red;">
+      Seleccione una categoría válida.
+    </div>
+  </div>
+
+  <!-- Botón de enví -->
+  <button type="submit" [disabled]="formulario.invalid" style="background-color: green; color: white; padding: 0.5rem 1rem; border: none; border-radius: 4px;">
+    Guardar
+  </button>
+
+</form>
